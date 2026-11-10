@@ -1,5 +1,14 @@
 %include "../../lib/pc_io.inc"  	; incluir declaraciones de procedimiento externos
 								; que se encuentran en la biblioteca libpc_io.a
+%macro PROTOENTRADA 0
+	push ebp
+	mov ebp,esp
+%endmacro
+
+%macro PROTOSALIDA 0
+	mov esp,ebp
+	pop ebp
+%endmacro
 
 %macro FOR 4
     push ecx
@@ -15,7 +24,8 @@
 
 section	.text
 	global _startd       ;referencia para inicio de programa
-    global _imprimir     
+    global _imprimir   
+    global _minimo  
 	
 	
 _startd:                
@@ -53,6 +63,47 @@ _startd:
         mov esp, ebp       ;Restaurar el puntero de la pila (libera el espacio reservado para las variables locales)
         pop ebp
         ret
+	
+	_minimo:
+		PROTOENTRADA
+		sub esp,4
+        push ebx
+        push ecx
+        push edx
+        push esi
+		mov ebx,dword[ebp+8];arreglo
+		mov ecx,dword[ebp+12];len
+		mov edx,dword[ebx];arreglo[0]
+		mov dword[ebp-4],edx;min
+		mov esi,0 ;i
+	.ciclo:
+		CMP esi,ecx
+		JL .cuerpo
+		JMP .fin
+	.cuerpo:
+		mov edx,dword[ebx+esi*4]
+		mov eax,dword[ebp-4]
+		cmp edx,eax
+		JL .cambio
+		jmp .incremento
+	.cambio:		
+		mov edx,dword[ebx+esi*4];arreglo[i]
+		mov dword[ebp-4],edx;min
+		jmp .incremento
+		
+	.incremento:
+		inc esi
+		jmp .ciclo
+		
+	.fin:	
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+		mov eax,dword[ebp-4]
+        add esp,4
+		PROTOSALIDA
+		ret
 
     
 
