@@ -16,14 +16,14 @@ int main(void)
 	int last_temps[SENSORS] = {25,25};
 	unsigned char flags[SENSORS] = {0b00000001,0b00000001};
 
-	printf("\n\r SENSOR 1: %d ",temps[0]);
+	printf("\n\r SENSOR 1: ~%d °C",temps[0]);
 	print_flag(flags[0]);
-	printf("\n\r SENSOR 2: %d ",temps[1]);
+	printf("\n\r SENSOR 2: ~%d °C",temps[1]);
 	print_flag(flags[1]);
 
 	update_temp(last_temps),
-	printf("\n\r SENSOR 1: %d ",last_temps[0]);
-	printf("\n\r SENSOR 2: %d ",last_temps[1]);
+	printf("\n\r SENSOR 1: ~%d °C",last_temps[0]);
+	printf("\n\r SENSOR 2: ~%d °C",last_temps[1]);
 
 
 	printf("\n\rFIN DE PROGRAMA\n\n\r");
