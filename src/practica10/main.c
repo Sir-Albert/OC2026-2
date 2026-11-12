@@ -7,6 +7,7 @@ extern void _setbit(unsigned char*,unsigned char);
 extern unsigned char _getbit(unsigned char,unsigned char);
 void update_temp( int *temps);
 void update_flags( int *temps,int *last_temps, unsigned char *flags);
+void print_flag(unsigned char flags);
 
 int main(void)
 {
@@ -14,8 +15,12 @@ int main(void)
 	int temps[SENSORS] = {25,25};
 	int last_temps[SENSORS] = {25,25};
 	unsigned char flags[SENSORS] = {0b00000001,0b00000001};
+
 	printf("\n\r SENSOR 1: %d ",temps[0]);
+	print_flag(flags[0]);
 	printf("\n\r SENSOR 2: %d ",temps[1]);
+	print_flag(flags[1]);
+
 	update_temp(last_temps),
 	printf("\n\r SENSOR 1: %d ",last_temps[0]);
 	printf("\n\r SENSOR 2: %d ",last_temps[1]);
@@ -35,4 +40,10 @@ void update_temp( int *temps)
 	{
 		temps[i]+=rand() % (max - min + 1) + min;
 	}
+}
+
+
+void print_flag(unsigned char flag)
+{
+	printf("-");
 }
